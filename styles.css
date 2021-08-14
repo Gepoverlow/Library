@@ -1,0 +1,59 @@
+body {
+  background-color: antiquewhite;
+  height: 100%;
+}
+
+.all-container,
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.all-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-container {
+  display: flex;
+  background-color: brown;
+  color: antiquewhite;
+  height: 80px;
+  margin: 7px 7px 0 7px;
+}
+
+.book-container {
+  background-color: maroon;
+  flex-grow: 1;
+  margin: 7px 7px 7px 7px;
+  padding-bottom: 7px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.book {
+  max-height: 400px;
+  max-width: 400px;
+  background-color: lightgray;
+  margin: 10px 10px 0 10px;
+}
+
+.popUp {
+  background-color: olive;
+  height: 300px;
+  width: 300px;
+}
+
+.hidden {
+  display: none;
+}
+
+#popUp {
+  margin-top: 7px;
+  margin-left: 7px;
+}
+
+.closeBook {
+  background-color: lime;
+}
