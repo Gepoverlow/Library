@@ -25,15 +25,15 @@ function addBookToLibrary(a) {
   myLibrary.push(a);
 }
 
-function closeUi() {
-  const close = document.querySelector(".closeBook");
-  close.addEventListener("click", function () {
-    for (let i = 0; i < myLibrary.length; i++) {
-      myLibrary.pop();
-      console.log(myLibrary);
-    }
-  });
-}
+// function closeUi() {
+//   const close = document.querySelector(".closeBook");
+//   close.addEventListener("click", function () {
+//     for (let i = 0; i < myLibrary.length; i++) {
+//       myLibrary.pop();
+//       console.log(myLibrary);
+//     }
+//   });
+// }
 
 function addBookToContainer(myLibrary) {
   let book = document.createElement("div");
@@ -56,7 +56,7 @@ function addBookToContainer(myLibrary) {
 
 const addButton = document.querySelector(".add-button");
 const popUp = document.getElementById("popUp");
-const close = document.getElementById("close");
+const closePopUp = document.getElementById("close");
 const submit = document.getElementById("submit");
 const title = document.getElementById("titleI");
 const author = document.getElementById("authorI");
@@ -69,7 +69,7 @@ addButton.addEventListener("click", function () {
   popUp.classList.remove("hidden");
 });
 
-close.addEventListener("click", function () {
+closePopUp.addEventListener("click", function () {
   popUp.classList.add("hidden");
   title.value = "";
   author.value = "";
@@ -82,11 +82,19 @@ submit.addEventListener("click", function () {
   let thePages = pages.value;
   let theRead = isRead.value;
   const book = new Book(theTitle, theAuthor, thePages);
-  console.log(myLibrary);
   addBookToLibrary(book);
   bookContainer.innerHTML = "";
   myLibrary.forEach(addBookToContainer);
   title.value = "";
   author.value = "";
   pages.value = "";
+  console.log(myLibrary);
+  let closeUI = document.querySelectorAll(".closeBook");
+  let closeArray = Array.from(closeUI);
+  for (let i = 0; i < myLibrary.length; i++) {
+    let closeButton = closeArray[i];
+    closeButton.addEventListener("click", function () {
+      console.log(`i am close ${i}`);
+    });
+  }
 });
