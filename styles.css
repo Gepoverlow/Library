@@ -21,6 +21,7 @@ body {
   color: antiquewhite;
   height: 80px;
   margin: 7px 7px 0 7px;
+  align-items: center;
 }
 
 .book-container {
@@ -33,10 +34,18 @@ body {
 }
 
 .book {
-  max-height: 400px;
-  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 400px;
+  min-width: 400px;
   background-color: lightgray;
   margin: 10px 10px 0 10px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-family: monospace;
+  padding: 3px 3px 3px 3px;
+  border: black 2px solid;
 }
 
 .popUp {
@@ -52,8 +61,41 @@ body {
 #popUp {
   margin-top: 7px;
   margin-left: 7px;
+  font-family: monospace;
 }
 
 .closeBook {
-  background-color: lime;
+  height: 100px;
+  width: 200px;
+  background-color: red;
+  border-radius: 10px;
+  font-size: 30px;
+  font-family: monospace;
+}
+
+.add-button {
+  height: 50px;
+  width: 50px;
+  font-size: 30px;
+  margin-left: 30px;
+  border-radius: 50%;
+  box-shadow: 3px -1px 3px;
+}
+
+.readButton {
+  background-color: green;
+}
+
+.notReadButton {
+  background-color: salmon;
+}
+
+.readButton,
+.notReadButton {
+  height: 100px;
+  width: 200px;
+  font-size: 30px;
+  font-family: monospace;
+  border-radius: 10px;
+  margin-bottom: 4px;
 }

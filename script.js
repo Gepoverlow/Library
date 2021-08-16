@@ -14,12 +14,16 @@ function createId() {
   return randomStr;
 }
 
-function Book(title, author, pages) {
+function Book(title, author, pages, check) {
   this.title = title;
   this.author = author;
   this.pages = pages;
+  this.read = check;
   this.id = createId();
+  this.readButton();
 }
+
+Book.prototype.readButton = function () {};
 
 function addBookToLibrary(a) {
   myLibrary.push(a);
@@ -37,21 +41,29 @@ function addBookToLibrary(a) {
 
 function addBookToContainer(myLibrary) {
   let book = document.createElement("div");
-  let closeBook = document.createElement("button");
   let titleB = document.createElement("h1");
-  let authorB = document.createElement("p");
+  let authorB = document.createElement("h2");
   let pagesB = document.createElement("p");
+  let readB = document.createElement("button");
+  let closeBook = document.createElement("button");
   bookContainer.appendChild(book);
   book.classList.add("book");
   closeBook.classList.add("closeBook");
-  book.appendChild(closeBook);
   book.appendChild(titleB);
   book.appendChild(authorB);
   book.appendChild(pagesB);
-  closeBook.textContent = "X";
+  book.appendChild(readB);
+  book.appendChild(closeBook);
+  closeBook.textContent = "Delete Book";
   titleB.textContent = myLibrary.title;
-  authorB.textContent = myLibrary.author;
+  authorB.textContent = `by ${myLibrary.author}`;
   pagesB.textContent = `${myLibrary.pages} pages`;
+  readB.textContent = myLibrary.read;
+  if (readB.textContent === "Read") {
+    readB.classList.add("readButton");
+  } else if (readB.textContent === "Not Read") {
+    readB.classList.add("notReadButton");
+  }
 }
 
 const addButton = document.querySelector(".add-button");
@@ -63,7 +75,6 @@ const author = document.getElementById("authorI");
 const pages = document.getElementById("pagesI");
 const isRead = document.getElementById("isReadI");
 const bookContainer = document.querySelector(".book-container");
-const closeTemp = document.getElementById("closeTemp");
 
 addButton.addEventListener("click", function () {
   popUp.classList.remove("hidden");
@@ -80,21 +91,23 @@ submit.addEventListener("click", function () {
   let theTitle = title.value;
   let theAuthor = author.value;
   let thePages = pages.value;
-  let theRead = isRead.value;
-  const book = new Book(theTitle, theAuthor, thePages);
+  let theRead = `${isRead.checked ? "Read" : "Not Read"}`;
+  const book = new Book(theTitle, theAuthor, thePages, theRead);
   addBookToLibrary(book);
   bookContainer.innerHTML = "";
   myLibrary.forEach(addBookToContainer);
+  const bookNode = document.querySelectorAll(".book");
   title.value = "";
   author.value = "";
   pages.value = "";
-  console.log(myLibrary);
   let closeUI = document.querySelectorAll(".closeBook");
   let closeArray = Array.from(closeUI);
   for (let i = 0; i < myLibrary.length; i++) {
     let closeButton = closeArray[i];
     closeButton.addEventListener("click", function () {
-      console.log(`i am close ${i}`);
+      let libraryIndex = myLibrary.indexOf(myLibrary[i]);
+      myLibrary.splice(libraryIndex, 1);
+      bookContainer.removeChild(bookNode[i]);
     });
   }
 });
