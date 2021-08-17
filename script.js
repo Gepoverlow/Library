@@ -14,30 +14,19 @@ function createId() {
   return randomStr;
 }
 
-function Book(title, author, pages, check) {
+function Book(title, author, pages, isRead) {
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.read = check;
+  this.read = isRead;
   this.id = createId();
-  this.readButton();
 }
 
-Book.prototype.readButton = function () {};
+Book.prototype.toggleRead = function (button) {};
 
 function addBookToLibrary(a) {
   myLibrary.push(a);
 }
-
-// function closeUi() {
-//   const close = document.querySelector(".closeBook");
-//   close.addEventListener("click", function () {
-//     for (let i = 0; i < myLibrary.length; i++) {
-//       myLibrary.pop();
-//       console.log(myLibrary);
-//     }
-//   });
-// }
 
 function addBookToContainer(myLibrary) {
   let book = document.createElement("div");
@@ -58,12 +47,27 @@ function addBookToContainer(myLibrary) {
   titleB.textContent = myLibrary.title;
   authorB.textContent = `by ${myLibrary.author}`;
   pagesB.textContent = `${myLibrary.pages} pages`;
-  readB.textContent = myLibrary.read;
-  if (readB.textContent === "Read") {
+  readB.textContent = `${myLibrary.read ? "Read" : "Not Read"}`;
+  console.log(myLibrary.read);
+  if (myLibrary.read === true) {
     readB.classList.add("readButton");
-  } else if (readB.textContent === "Not Read") {
+  } else if (myLibrary.read === false) {
     readB.classList.add("notReadButton");
   }
+  readB.addEventListener("click", function () {
+    let className = readB.getAttribute("class");
+    if (className === "readButton") {
+      readB.className = "notReadButton";
+      readB.textContent = "Not Read";
+      myLibrary.read = false;
+    } else if (className === "notReadButton") {
+      readB.className = "readButton";
+      readB.textContent = "Read";
+      myLibrary.read = true;
+    }
+    console.log(myLibrary);
+  });
+  console.log(myLibrary);
 }
 
 const addButton = document.querySelector(".add-button");
@@ -91,7 +95,7 @@ submit.addEventListener("click", function () {
   let theTitle = title.value;
   let theAuthor = author.value;
   let thePages = pages.value;
-  let theRead = `${isRead.checked ? "Read" : "Not Read"}`;
+  let theRead = isRead.checked;
   const book = new Book(theTitle, theAuthor, thePages, theRead);
   addBookToLibrary(book);
   bookContainer.innerHTML = "";

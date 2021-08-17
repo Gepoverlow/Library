@@ -1,3 +1,8 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
 body {
   background-color: antiquewhite;
   height: 100%;
@@ -22,6 +27,7 @@ body {
   height: 80px;
   margin: 7px 7px 0 7px;
   align-items: center;
+  padding: 20px;
 }
 
 .book-container {
@@ -30,15 +36,18 @@ body {
   margin: 7px 7px 7px 7px;
   padding-bottom: 7px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-gap: 20px;
+  /* grid-template-columns: repeat(3, 1fr); */
 }
 
 .book {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 400px;
-  min-width: 400px;
+  justify-content: space-evenly;
+  /* min-height: 400px;
+  min-width: 400px; */
   background-color: lightgray;
   margin: 10px 10px 0 10px;
   border-radius: 10px;
