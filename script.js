@@ -26,7 +26,7 @@ function addBookToLibrary(a) {
   myLibrary.push(a);
 }
 
-function addBookToContainer(myLibrary) {
+function addBookToContainer(addedBook) {
   let book = document.createElement("div");
   let titleB = document.createElement("h1");
   let authorB = document.createElement("h2");
@@ -36,20 +36,20 @@ function addBookToContainer(myLibrary) {
   bookContainer.appendChild(book);
   book.classList.add("book");
   closeBook.classList.add("closeBook");
-  book.setAttribute("id", `${myLibrary.id}`);
+  book.setAttribute("id", `${addedBook.id}`);
   book.appendChild(titleB);
   book.appendChild(authorB);
   book.appendChild(pagesB);
   book.appendChild(readB);
   book.appendChild(closeBook);
   closeBook.textContent = "Delete Book";
-  titleB.textContent = myLibrary.title;
-  authorB.textContent = `by ${myLibrary.author}`;
-  pagesB.textContent = `${myLibrary.pages} pages`;
-  readB.textContent = `${myLibrary.read ? "Read" : "Not Read"}`;
-  if (myLibrary.read === true) {
+  titleB.textContent = addedBook.title;
+  authorB.textContent = `by ${addedBook.author}`;
+  pagesB.textContent = `${addedBook.pages} pages`;
+  readB.textContent = `${addedBook.read ? "Read" : "Not Read"}`;
+  if (addedBook.read === true) {
     readB.classList.add("readButton");
-  } else if (myLibrary.read === false) {
+  } else if (addedBook.read === false) {
     readB.classList.add("notReadButton");
   }
   readB.addEventListener("click", function () {
@@ -57,13 +57,18 @@ function addBookToContainer(myLibrary) {
     if (className === "readButton") {
       readB.className = "notReadButton";
       readB.textContent = "Not Read";
-      myLibrary.read = false;
+      addedBook.read = false;
     } else if (className === "notReadButton") {
       readB.className = "readButton";
       readB.textContent = "Read";
-      myLibrary.read = true;
+      addedBook.read = true;
     }
+    addToLocalStorage(myLibrary);
   });
+}
+
+function addToLocalStorage(arr) {
+  localStorage.setItem("myLibrary", JSON.stringify(arr));
 }
 
 const addButton = document.querySelector(".add-button");
@@ -112,28 +117,14 @@ submit.addEventListener("click", function () {
         .indexOf(bookUI.id);
       myLibrary.splice(indexOfId, 1);
       bookContainer.removeChild(bookUI);
+      addToLocalStorage(myLibrary);
+      // !!
+      // localStorage.removeItem("myLibrary");
+      // localStorage.clear();
+      // !!
     });
+    addToLocalStorage(myLibrary);
   }
-
-  //
-
-  /*
-  const bookNode = document.querySelectorAll(".book");
-  title.value = "";
-  author.value = "";
-  pages.value = "";
-  let closeUI = document.querySelectorAll(".closeBook");
-  let closeArray = Array.from(closeUI);
-  for (let i = 0; i < myLibrary.length; i++) {
-    let closeButton = closeArray[i];
-    closeButton.addEventListener("click", function () {
-      let libraryIndex = myLibrary.indexOf(myLibrary[i]);
-      myLibrary.splice(libraryIndex, 1);
-      bookContainer.removeChild(bookNode[i]);
-      console.log(myLibrary);
-    });
-  }
-  */
 });
 
 /*
