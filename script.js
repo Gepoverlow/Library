@@ -1,6 +1,29 @@
 "use strict";
 
-let myLibrary = [];
+function getStorageData() {
+  return JSON.parse(localStorage.getItem("myLibrary") || "[]");
+}
+
+let myLibrary = getStorageData();
+
+function deleteBook() {
+  for (let i = 0; i < myLibrary.length; i++) {
+    let bookUI = document.getElementById(`${myLibrary[i].id}`);
+    let closeButton = bookUI.childNodes[4];
+    closeButton.addEventListener("click", function () {
+      let indexOfId = myLibrary
+        .map(function (e) {
+          return e.id;
+        })
+        .indexOf(bookUI.id);
+
+      myLibrary.splice(indexOfId, 1);
+      bookContainer.removeChild(bookUI);
+      addToLocalStorage(myLibrary);
+    });
+    addToLocalStorage(myLibrary);
+  }
+}
 
 function createId() {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -33,25 +56,29 @@ function addBookToContainer(addedBook) {
   let pagesB = document.createElement("p");
   let readB = document.createElement("button");
   let closeBook = document.createElement("button");
-  bookContainer.appendChild(book);
+
   book.classList.add("book");
   closeBook.classList.add("closeBook");
   book.setAttribute("id", `${addedBook.id}`);
+  bookContainer.appendChild(book);
   book.appendChild(titleB);
   book.appendChild(authorB);
   book.appendChild(pagesB);
   book.appendChild(readB);
   book.appendChild(closeBook);
+
   closeBook.textContent = "Delete Book";
   titleB.textContent = addedBook.title;
   authorB.textContent = `by ${addedBook.author}`;
   pagesB.textContent = `${addedBook.pages} pages`;
   readB.textContent = `${addedBook.read ? "Read" : "Not Read"}`;
+
   if (addedBook.read === true) {
     readB.classList.add("readButton");
   } else if (addedBook.read === false) {
     readB.classList.add("notReadButton");
   }
+
   readB.addEventListener("click", function () {
     let className = readB.getAttribute("class");
     if (className === "readButton") {
@@ -97,48 +124,21 @@ submit.addEventListener("click", function () {
   let theAuthor = author.value;
   let thePages = pages.value;
   let theRead = isRead.checked;
+
   const book = new Book(theTitle, theAuthor, thePages, theRead);
   addBookToLibrary(book);
   bookContainer.innerHTML = "";
   myLibrary.forEach(addBookToContainer);
+
   title.value = "";
   author.value = "";
   pages.value = "";
 
-  // This bit was hard! took me some time to figure it out!
-  for (let i = 0; i < myLibrary.length; i++) {
-    let bookUI = document.getElementById(`${myLibrary[i].id}`);
-    let closeButton = bookUI.childNodes[4];
-    closeButton.addEventListener("click", function () {
-      let indexOfId = myLibrary
-        .map(function (e) {
-          return e.id;
-        })
-        .indexOf(bookUI.id);
-      myLibrary.splice(indexOfId, 1);
-      bookContainer.removeChild(bookUI);
-      addToLocalStorage(myLibrary);
-      // !!
-      // localStorage.removeItem("myLibrary");
-      // localStorage.clear();
-      // !!
-    });
-    addToLocalStorage(myLibrary);
-  }
+  deleteBook();
 });
 
-/*
-let myBookArray = [
-  { title: "Luk", author: "Ale", pages: 3, id: "qwerty" },
-  { title: "Ale", author: "Palo", pages: 4, id: "asdfg" },
-  { title: "Palo", author: "Luk", pages: 1, id: "zxcvb" },
-];
+window.addEventListener("load", function () {
+  myLibrary.forEach(addBookToContainer);
 
-let indexOfId = myBookArray
-  .map(function (e) {
-    return e.id;
-  })
-  .indexOf("asdfg");
-
-console.log(indexOfId);
-*/
+  deleteBook();
+});
