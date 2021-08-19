@@ -22,8 +22,6 @@ function Book(title, author, pages, isRead) {
   this.id = createId();
 }
 
-Book.prototype.toggleRead = function (button) {};
-
 function addBookToLibrary(a) {
   myLibrary.push(a);
 }
@@ -38,6 +36,7 @@ function addBookToContainer(myLibrary) {
   bookContainer.appendChild(book);
   book.classList.add("book");
   closeBook.classList.add("closeBook");
+  book.setAttribute("id", `${myLibrary.id}`);
   book.appendChild(titleB);
   book.appendChild(authorB);
   book.appendChild(pagesB);
@@ -48,7 +47,6 @@ function addBookToContainer(myLibrary) {
   authorB.textContent = `by ${myLibrary.author}`;
   pagesB.textContent = `${myLibrary.pages} pages`;
   readB.textContent = `${myLibrary.read ? "Read" : "Not Read"}`;
-  console.log(myLibrary.read);
   if (myLibrary.read === true) {
     readB.classList.add("readButton");
   } else if (myLibrary.read === false) {
@@ -65,9 +63,7 @@ function addBookToContainer(myLibrary) {
       readB.textContent = "Read";
       myLibrary.read = true;
     }
-    console.log(myLibrary);
   });
-  console.log(myLibrary);
 }
 
 const addButton = document.querySelector(".add-button");
@@ -100,6 +96,28 @@ submit.addEventListener("click", function () {
   addBookToLibrary(book);
   bookContainer.innerHTML = "";
   myLibrary.forEach(addBookToContainer);
+  title.value = "";
+  author.value = "";
+  pages.value = "";
+
+  // This bit was hard! took me some time to figure it out!
+  for (let i = 0; i < myLibrary.length; i++) {
+    let bookUI = document.getElementById(`${myLibrary[i].id}`);
+    let closeButton = bookUI.childNodes[4];
+    closeButton.addEventListener("click", function () {
+      let indexOfId = myLibrary
+        .map(function (e) {
+          return e.id;
+        })
+        .indexOf(bookUI.id);
+      myLibrary.splice(indexOfId, 1);
+      bookContainer.removeChild(bookUI);
+    });
+  }
+
+  //
+
+  /*
   const bookNode = document.querySelectorAll(".book");
   title.value = "";
   author.value = "";
@@ -112,6 +130,24 @@ submit.addEventListener("click", function () {
       let libraryIndex = myLibrary.indexOf(myLibrary[i]);
       myLibrary.splice(libraryIndex, 1);
       bookContainer.removeChild(bookNode[i]);
+      console.log(myLibrary);
     });
   }
+  */
 });
+
+/*
+let myBookArray = [
+  { title: "Luk", author: "Ale", pages: 3, id: "qwerty" },
+  { title: "Ale", author: "Palo", pages: 4, id: "asdfg" },
+  { title: "Palo", author: "Luk", pages: 1, id: "zxcvb" },
+];
+
+let indexOfId = myBookArray
+  .map(function (e) {
+    return e.id;
+  })
+  .indexOf("asdfg");
+
+console.log(indexOfId);
+*/
