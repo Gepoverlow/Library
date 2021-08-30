@@ -37,12 +37,14 @@ function createId() {
   return randomStr;
 }
 
-function Book(title, author, pages, isRead) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = isRead;
-  this.id = createId();
+class Book {
+  constructor(title, author, pages, isRead) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = isRead;
+    this.id = createId();
+  }
 }
 
 function addBookToLibrary(a) {
