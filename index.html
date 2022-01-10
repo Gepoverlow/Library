@@ -15,12 +15,14 @@
             <button class="add-button">+</button>
         </div>
       </div>
-      <div id="popUp" class="hidden">
-            <input id="titleI" type="text" placeholder="Title"> 
-            <input id="authorI" type="text" placeholder="Author"> 
-             <input id="pagesI" type="number" placeholder="Pages"> 
+      <div id="popUp">
+        <form id="popUpForm">
+            <label for="titleI">Title > </label><input id="titleI" type="text" required> 
+            <label for="authorI">Author > </label><input id="authorI" type="text" required> 
+            <label for="pagesI">Pages > </label> <input id="pagesI" type="number" required> 
           is Read? >   <input id="isReadI" type="checkbox"> 
         <button id="submit" type="submit">Submit</button>
+      </form>
         <button id="close">X</button>
       </div>
       <div class="book-container">      

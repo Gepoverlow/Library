@@ -109,34 +109,37 @@ const author = document.getElementById("authorI");
 const pages = document.getElementById("pagesI");
 const isRead = document.getElementById("isReadI");
 const bookContainer = document.querySelector(".book-container");
+const popUpForm = document.getElementById("popUpForm");
 
 addButton.addEventListener("click", function () {
-  popUp.classList.remove("hidden");
+  popUp.style.display = "flex";
 });
 
 closePopUp.addEventListener("click", function () {
-  popUp.classList.add("hidden");
+  popUp.style.display = "none";
   title.value = "";
   author.value = "";
   pages.value = "";
 });
 
 submit.addEventListener("click", function () {
-  let theTitle = title.value;
-  let theAuthor = author.value;
-  let thePages = pages.value;
-  let theRead = isRead.checked;
+  if (popUpForm.checkValidity()) {
+    let theTitle = title.value;
+    let theAuthor = author.value;
+    let thePages = pages.value;
+    let theRead = isRead.checked;
 
-  const book = new Book(theTitle, theAuthor, thePages, theRead);
-  addBookToLibrary(book);
-  bookContainer.innerHTML = "";
-  myLibrary.forEach(addBookToContainer);
+    const book = new Book(theTitle, theAuthor, thePages, theRead);
+    addBookToLibrary(book);
+    bookContainer.innerHTML = "";
+    myLibrary.forEach(addBookToContainer);
 
-  title.value = "";
-  author.value = "";
-  pages.value = "";
+    title.value = "";
+    author.value = "";
+    pages.value = "";
 
-  deleteBook();
+    deleteBook();
+  }
 });
 
 window.addEventListener("load", function () {

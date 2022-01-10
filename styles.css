@@ -42,7 +42,6 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   grid-gap: 20px;
-  /* grid-template-columns: repeat(3, 1fr); */
 }
 
 .book {
@@ -62,17 +61,12 @@ body {
   border: black 2px solid;
 }
 
-.popUp {
-  background-color: olive;
-  height: 300px;
-  width: 300px;
-}
-
-.hidden {
+/* .hidden {
   display: none;
-}
+} */
 
 #popUp {
+  display: none;
   margin-top: 7px;
   margin-left: 7px;
   font-family: monospace;
