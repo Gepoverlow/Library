@@ -147,3 +147,5 @@ window.addEventListener("load", function () {
 
   deleteBook();
 });
+
+// Like this project tweaking
