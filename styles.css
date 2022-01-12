@@ -35,7 +35,7 @@ body {
 }
 
 .book-container {
-  background-color: maroon;
+  background-color: rgb(184, 87, 87);
   flex-grow: 1;
   margin: 7px 7px 7px 7px;
   padding-bottom: 7px;
